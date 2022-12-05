@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"log"
+	"main/model"
 	"net/http"
 	"os"
 
@@ -17,9 +20,17 @@ func main() {
 
 	api_key := os.Getenv("API_KEY")
 
-	resp, err := http.Get("https://jsonplaceholder.typicode.com/todos/1")
+	resp, err := http.Get("https://imdb-api.com/en/API/Top250TVs/" + api_key)
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	defer resp.Body.Close()
+	bodyBytes, _ := ioutil.ReadAll(resp.Body)
+
+	var topMovies model.TopMovies
+	json.Unmarshal(bodyBytes, &topMovies)
+
+	//Add DATA to Redis
 
 }
