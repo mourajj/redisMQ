@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"main/model"
@@ -30,6 +31,8 @@ func main() {
 
 	var topMovies model.TopMovies
 	json.Unmarshal(bodyBytes, &topMovies)
+
+	fmt.Println("running on a docker =)")
 
 	//Add DATA to Redis
 
